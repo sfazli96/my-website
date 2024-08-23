@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function Greeting() {
+const Greeting = () => {
     const [message, setMessage] = useState('');
+    const [funFact, setFunFact] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/greeting/')
+        fetch('/api/greeting/')
             .then(response => response.json())
-            .then(data => setMessage(data.message));
+            .then(data => {
+                setMessage(data.message);
+                setFunFact(data.fun_fact);
+            });
     }, []);
 
-    return <h1>{message}</h1>;
-}
+    return (
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+            <h1>{message}</h1>
+            <p>🌟 Fun Fact: {funFact}</p>
+            <p>Enjoy your stay and discover more interesting facts!</p>
+        </div>
+    );
+};
 
 export default Greeting;
